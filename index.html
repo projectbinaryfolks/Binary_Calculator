@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Calculadora Binária de 2 Bits</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f6f8;
+      margin: 0;
+      color: #222;
+    }
+
+    header {
+      background: #0d47a1;
+      color: white;
+      padding: 28px 16px;
+      text-align: center;
+    }
+
+    main {
+      max-width: 900px;
+      margin: 24px auto;
+      background: white;
+      padding: 24px;
+      border-radius: 14px;
+      box-shadow: 0 0 12px rgba(0,0,0,0.12);
+    }
+
+    h1, h2, h3 {
+      margin-top: 0;
+    }
+
+    label {
+      display: block;
+      margin-top: 14px;
+      font-weight: bold;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      margin-top: 5px;
+      font-size: 18px;
+      box-sizing: border-box;
+      border: 1px solid #bbb;
+      border-radius: 8px;
+    }
+
+    button {
+      margin-top: 18px;
+      padding: 12px 20px;
+      font-size: 18px;
+      background: #2e7d32;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #1b5e20;
+    }
+
+    .caixa {
+      margin-top: 24px;
+      padding: 18px;
+      border-radius: 10px;
+    }
+
+    .resultado {
+      background: #e8f5e9;
+      border-left: 7px solid #2e7d32;
+      display: none;
+    }
+
+    .erro {
+      background: #ffebee;
+      border-left: 7px solid #c62828;
+      color: #8b0000;
+      display: none;
+    }
+
+    .explicacao {
+      background: #eef4ff;
+      border-left: 7px solid #0d47a1;
+    }
+
+    .bits {
+      font-size: 34px;
+      font-weight: bold;
+      color: #0d47a1;
+      letter-spacing: 6px;
+    }
+
+    .numero {
+      font-size: 48px;
+      font-weight: bold;
+      color: #2e7d32;
+    }
+
+    pre {
+      background: #f0f0f0;
+      padding: 14px;
+      border-radius: 8px;
+      overflow-x: auto;
+      font-size: 16px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 12px;
+    }
+
+    th, td {
+      border: 1px solid #ccc;
+      padding: 8px;
+      text-align: center;
+    }
+
+    th {
+      background: #e3f2fd;
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <h1>Calculadora Binária de 2 Bits</h1>
+  <p>Consulte seu resultado esperado e tente obtê-lo na calculadora física</p>
+</header>
+
+<main>
+  <section>
+    <h2>Login do participante</h2>
+
+    <label for="usuario">Usuário binário de 6 dígitos:</label>
+    <input id="usuario" maxlength="6" placeholder="Exemplo: 000101">
+
+    <label for="senha">Senha:</label>
+    <input id="senha" type="password" placeholder="Digite sua senha">
+
+    <button onclick="fazerLogin()">Entrar</button>
+
+    <div id="erro" class="caixa erro"></div>
+
+    <div id="resultado" class="caixa resultado"></div>
+  </section>
+
+  <section class="caixa explicacao">
+    <h2>Como funciona a calculadora binária?</h2>
+
+    <p>
+      A calculadora soma dois números binários de 2 bits:
+    </p>
+
+    <pre>
+A = A1 A0
+B = B1 B0
+
+Resultado = S2 S1 S0
+    </pre>
+
+    <p>
+      Cada entrada pode representar um número de 0 a 3:
+    </p>
+
+    <table>
+      <tr>
+        <th>Binário</th>
+        <th>Decimal</th>
+      </tr>
+      <tr>
+        <td>00</td>
+        <td>0</td>
+      </tr>
+      <tr>
+        <td>01</td>
+        <td>1</td>
+      </tr>
+      <tr>
+        <td>10</td>
+        <td>2</td>
+      </tr>
+      <tr>
+        <td>11</td>
+        <td>3</td>
+      </tr>
+    </table>
+
+    <h3>Exemplo</h3>
+
+    <p>Para obter resultado 3, uma possibilidade é fazer:</p>
+
+    <pre>
+A = 01₂ = 1
+B = 10₂ = 2
+
+  01
++ 10
+----
+ 011
+    </pre>
+
+    <p>
+      Portanto:
+    </p>
+
+    <p class="bits">S2 S1 S0 = 0 1 1</p>
+
+    <p>
+      O Arduino lerá os LEDs da calculadora física e verificará se o resultado obtido é igual ao resultado esperado do usuário.
+    </p>
+  </section>
+</main>
+
+<script>
+  /*
+    Tabela de usuários.
+
+    usuario: deve ter exatamente 6 dígitos com 0 e 1.
+    senha: senha didática, sem segurança real.
+    resultado: número decimal esperado, de 0 a 6 no caso da soma de dois números de 2 bits.
+  */
+
+  const usuarios = {
+    "000001": { senha: "aluno01", resultado: 1 },
+    "000010": { senha: "aluno02", resultado: 2 },
+    "000011": { senha: "aluno03", resultado: 3 },
+    "000100": { senha: "aluno04", resultado: 4 },
+    "000101": { senha: "aluno05", resultado: 3 },
+    "000110": { senha: "aluno06", resultado: 5 },
+    "000111": { senha: "aluno07", resultado: 6 },
+    "001000": { senha: "aluno08", resultado: 2 }
+  };
+
+  function fazerLogin() {
+    const usuario = document.getElementById("usuario").value.trim();
+    const senha = document.getElementById("senha").value.trim();
+
+    const divErro = document.getElementById("erro");
+    const divResultado = document.getElementById("resultado");
+
+    divErro.style.display = "none";
+    divResultado.style.display = "none";
+
+    if (!/^[01]{6}$/.test(usuario)) {
+      mostrarErro("O usuário deve conter exatamente 6 dígitos, usando apenas 0 e 1.");
+      return;
+    }
+
+    if (!usuarios[usuario]) {
+      mostrarErro("Usuário não encontrado.");
+      return;
+    }
+
+    if (usuarios[usuario].senha !== senha) {
+      mostrarErro("Senha incorreta.");
+      return;
+    }
+
+    const resultado = usuarios[usuario].resultado;
+    const resultadoBinario = resultado.toString(2).padStart(3, "0");
+
+    divResultado.innerHTML = `
+      <h2>Login realizado</h2>
+
+      <p>Usuário:</p>
+      <p><strong>${usuario}</strong></p>
+
+      <p>Seu resultado esperado é:</p>
+      <p class="numero">${resultado}</p>
+
+      <p>Em binário, a calculadora deve mostrar:</p>
+      <p class="bits">S2 S1 S0 = ${resultadoBinario[0]} ${resultadoBinario[1]} ${resultadoBinario[2]}</p>
+
+      <p>
+        Agora escolha dois números de 2 bits na calculadora física de forma que a soma dê esse resultado.
+      </p>
+    `;
+
+    divResultado.style.display = "block";
+  }
+
+  function mostrarErro(mensagem) {
+    const divErro = document.getElementById("erro");
+    divErro.textContent = mensagem;
+    divErro.style.display = "block";
+  }
+</script>
+
+</body>
+</html>
