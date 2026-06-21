@@ -5,20 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>Calculadora Binária de 2 Bits</title>
-<p style="text-align: center; margin-top: 20px;">
-  <a href="atividade.html" style="
-    display: inline-block;
-    background: #f57c00;
-    color: white;
-    padding: 14px 22px;
-    border-radius: 999px;
-    text-decoration: none;
-    font-weight: bold;
-    font-size: 18px;
-  ">
-    Ir para atividade: Decimal → Binário
-  </a>
-</p>
+
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -76,6 +63,27 @@
 
     button:hover {
       background: #1b5e20;
+    }
+
+    .botao-atividade {
+      display: inline-block;
+      background: #f57c00;
+      color: white;
+      padding: 14px 22px;
+      border-radius: 999px;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 18px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.18);
+    }
+
+    .botao-atividade:hover {
+      background: #e65100;
+    }
+
+    .area-botao-atividade {
+      text-align: center;
+      margin: 10px 0 28px 0;
     }
 
     .caixa {
@@ -149,6 +157,13 @@
 </header>
 
 <main>
+
+  <div class="area-botao-atividade">
+    <a href="atividade.html" class="botao-atividade">
+      Ir para atividade: Decimal → Binário
+    </a>
+  </div>
+
   <section>
     <h2>Login do participante</h2>
 
@@ -206,25 +221,37 @@ Resultado = S2 S1 S0
       </tr>
     </table>
 
-    <h3>Exemplo</h3>
+    <h3>Exemplo: 3 + 3 = 6</h3>
 
-    <p>Para obter resultado 3, uma possibilidade é fazer:</p>
+    <p>
+      Para obter resultado 6, podemos fazer:
+    </p>
 
     <pre>
-A = 01₂ = 1
-B = 10₂ = 2
+3 = 11₂
+3 = 11₂
 
-  01
-+ 10
-----
- 011
+   11
++  11
+-----
+  110
     </pre>
 
     <p>
-      Portanto:
+      Portanto, o resultado 6 em binário é:
     </p>
 
-    <p class="bits">S2 S1 S0 = 0 1 1</p>
+    <p class="bits">S2 S1 S0 = 1 1 0</p>
+
+    <p>
+      Isso significa que, na calculadora física, os LEDs devem indicar:
+    </p>
+
+    <ul>
+      <li><strong>S2 aceso</strong></li>
+      <li><strong>S1 aceso</strong></li>
+      <li><strong>S0 apagado</strong></li>
+    </ul>
 
     <p>
       O Arduino lerá os LEDs da calculadora física e verificará se o resultado obtido é igual ao resultado esperado do usuário.
