@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Atividade: Decimal para Binário</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f8ff;
+      margin: 0;
+      color: #222;
+    }
+
+    header {
+      background: linear-gradient(135deg, #0d47a1, #00acc1);
+      color: white;
+      padding: 28px 16px;
+      text-align: center;
+    }
+
+    main {
+      max-width: 900px;
+      margin: 24px auto;
+      background: white;
+      padding: 24px;
+      border-radius: 18px;
+      box-shadow: 0 8px 22px rgba(0,0,0,0.15);
+    }
+
+    h1, h2 {
+      margin-top: 0;
+    }
+
+    .cartao {
+      background: #eef4ff;
+      border-left: 7px solid #0d47a1;
+      padding: 18px;
+      border-radius: 12px;
+      margin-top: 20px;
+    }
+
+    .numero-desafio {
+      font-size: 64px;
+      font-weight: bold;
+      color: #0d47a1;
+      text-align: center;
+      margin: 20px 0;
+    }
+
+    input {
+      width: 100%;
+      padding: 14px;
+      font-size: 24px;
+      text-align: center;
+      letter-spacing: 6px;
+      box-sizing: border-box;
+      border: 2px solid #aaa;
+      border-radius: 10px;
+      margin-top: 10px;
+    }
+
+    button {
+      margin-top: 16px;
+      padding: 14px 22px;
+      font-size: 18px;
+      font-weight: bold;
+      background: #2e7d32;
+      color: white;
+      border: none;
+      border-radius: 999px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #1b5e20;
+    }
+
+    .botao-secundario {
+      background: #f57c00;
+    }
+
+    .botao-secundario:hover {
+      background: #e65100;
+    }
+
+    .resposta {
+      margin-top: 18px;
+      padding: 16px;
+      border-radius: 12px;
+      font-size: 20px;
+      display: none;
+    }
+
+    .certo {
+      background: #e8f5e9;
+      border-left: 7px solid #2e7d32;
+    }
+
+    .errado {
+      background: #ffebee;
+      border-left: 7px solid #c62828;
+    }
+
+    .tabela-bits {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 8px;
+      text-align: center;
+      margin-top: 16px;
+    }
+
+    .bit {
+      background: #e3f2fd;
+      border: 2px solid #90caf9;
+      border-radius: 10px;
+      padding: 10px;
+    }
+
+    .bit strong {
+      display: block;
+      font-size: 24px;
+      color: #0d47a1;
+    }
+
+    .exemplo {
+      background: #fff8e1;
+      border-left: 7px solid #f9a825;
+      padding: 18px;
+      border-radius: 12px;
+      margin-top: 20px;
+    }
+
+    .placar {
+      margin-top: 16px;
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    a {
+      color: #0d47a1;
+      font-weight: bold;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .voltar {
+      margin-top: 24px;
+      display: inline-block;
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <h1>Atividade: Decimal para Binário</h1>
+  <p>Transforme números do nosso dia a dia em números feitos só com 0 e 1</p>
+</header>
+
+<main>
+
+  <section class="cartao">
+    <h2>Desafio</h2>
+    <p>Escreva o número abaixo em forma binária, usando apenas <strong>0</strong> e <strong>1</strong>.</p>
+
+    <div class="numero-desafio" id="numeroDesafio">10</div>
+
+    <label for="respostaAluno"><strong>Sua resposta:</strong></label>
+    <input id="respostaAluno" placeholder="Exemplo: 1010 ou 001010" maxlength="6">
+
+    <button onclick="verificarResposta()">Verificar</button>
+    <button class="botao-secundario" onclick="novoDesafio()">Novo desafio</button>
+
+    <div id="mensagem" class="resposta"></div>
+
+    <div class="placar">
+      Acertos: <span id="acertos">0</span> |
+      Tentativas: <span id="tentativas">0</span>
+    </div>
+  </section>
+
+  <section class="cartao">
+    <h2>Como pensar em binário?</h2>
+
+    <p>
+      No sistema decimal usamos os algarismos de 0 a 9.
+      No sistema binário usamos apenas:
+    </p>
+
+    <p style="font-size: 32px; font-weight: bold; text-align: center;">
+      0 e 1
+    </p>
+
+    <p>
+      Cada posição binária vale uma potência de 2.
+      Para 6 bits, usamos:
+    </p>
+
+    <div class="tabela-bits">
+      <div class="bit">
+        <strong>32</strong>
+        2⁵
+      </div>
+      <div class="bit">
+        <strong>16</strong>
+        2⁴
+      </div>
+      <div class="bit">
+        <strong>8</strong>
+        2³
+      </div>
+      <div class="bit">
+        <strong>4</strong>
+        2²
+      </div>
+      <div class="bit">
+        <strong>2</strong>
+        2¹
+      </div>
+      <div class="bit">
+        <strong>1</strong>
+        2⁰
+      </div>
+    </div>
+
+    <p>
+      Para formar um número, colocamos <strong>1</strong> nas posições que vamos usar
+      e <strong>0</strong> nas posições que não vamos usar.
+    </p>
+  </section>
+
+  <section class="exemplo">
+    <h2>Exemplo: como escrever 10 em binário?</h2>
+
+    <p>Queremos formar o número 10 usando:</p>
+
+    <p style="font-size: 24px; font-weight: bold; text-align: center;">
+      32 &nbsp; 16 &nbsp; 8 &nbsp; 4 &nbsp; 2 &nbsp; 1
+    </p>
+
+    <p>
+      O número 10 pode ser feito assim:
+    </p>
+
+    <p style="font-size: 28px; font-weight: bold; text-align: center;">
+      8 + 2 = 10
+    </p>
+
+    <p>
+      Então colocamos:
+    </p>
+
+    <ul>
+      <li><strong>1</strong> no 8, porque vamos usar o 8;</li>
+      <li><strong>0</strong> no 4, porque não vamos usar o 4;</li>
+      <li><strong>1</strong> no 2, porque vamos usar o 2;</li>
+      <li><strong>0</strong> no 1, porque não vamos usar o 1.</li>
+    </ul>
+
+    <p>Assim:</p>
+
+    <p style="font-size: 34px; font-weight: bold; text-align: center; color: #0d47a1;">
+      10 = 1010₂
+    </p>
+
+    <p>
+      Em 6 bits, podemos escrever:
+    </p>
+
+    <p style="font-size: 34px; font-weight: bold; text-align: center; color: #0d47a1;">
+      10 = 001010₂
+    </p>
+  </section>
+
+  <a class="voltar" href="index.html">← Voltar para a calculadora binária</a>
+
+</main>
+
+<script>
+  const desafios = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 15, 16, 20, 24, 31, 32, 40, 48, 63];
+
+  let numeroAtual = 10;
+  let acertos = 0;
+  let tentativas = 0;
+
+  function decimalParaBinario(numero) {
+    return numero.toString(2);
+  }
+
+  function decimalParaBinario6Bits(numero) {
+    return numero.toString(2).padStart(6, "0");
+  }
+
+  function removerZerosAEsquerda(texto) {
+    let limpo = texto.replace(/^0+/, "");
+    return limpo === "" ? "0" : limpo;
+  }
+
+  function verificarResposta() {
+    const resposta = document.getElementById("respostaAluno").value.trim();
+    const mensagem = document.getElementById("mensagem");
+
+    mensagem.style.display = "block";
+    mensagem.className = "resposta";
+
+    if (!/^[01]+$/.test(resposta)) {
+      mensagem.classList.add("errado");
+      mensagem.innerHTML = "Use apenas os algarismos <strong>0</strong> e <strong>1</strong>.";
+      return;
+    }
+
+    const corretaCurta = decimalParaBinario(numeroAtual);
+    const correta6Bits = decimalParaBinario6Bits(numeroAtual);
+
+    const respostaNormalizada = removerZerosAEsquerda(resposta);
+    const corretaNormalizada = removerZerosAEsquerda(corretaCurta);
+
+    tentativas++;
+
+    if (respostaNormalizada === corretaNormalizada) {
+      acertos++;
+
+      mensagem.classList.add("certo");
+      mensagem.innerHTML = `
+        <strong>Parabéns!</strong> Você acertou!<br>
+        ${numeroAtual} em binário é <strong>${corretaCurta}</strong>.<br>
+        Em 6 bits, fica <strong>${correta6Bits}</strong>.
+      `;
+    } else {
+      mensagem.classList.add("errado");
+      mensagem.innerHTML = `
+        Ainda não foi dessa vez.<br>
+        O número <strong>${numeroAtual}</strong> em binário é <strong>${corretaCurta}</strong>.<br>
+        Em 6 bits, fica <strong>${correta6Bits}</strong>.<br><br>
+        Dica: tente formar ${numeroAtual} usando 32, 16, 8, 4, 2 e 1.
+      `;
+    }
+
+    document.getElementById("acertos").textContent = acertos;
+    document.getElementById("tentativas").textContent = tentativas;
+  }
+
+  function novoDesafio() {
+    const indice = Math.floor(Math.random() * desafios.length);
+    numeroAtual = desafios[indice];
+
+    document.getElementById("numeroDesafio").textContent = numeroAtual;
+    document.getElementById("respostaAluno").value = "";
+
+    const mensagem = document.getElementById("mensagem");
+    mensagem.style.display = "none";
+  }
+
+  novoDesafio();
+</script>
+
+</body>
+</html>
